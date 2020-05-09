@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@actions/core": "^1.2.4",
+    "execa": "^4.0.1",
+    "got": "^11.1.2"
+  },
+  "devDependencies": {
+    "@types/node": "^13.13.5"
+  }
+}
