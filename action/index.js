@@ -3046,7 +3046,7 @@ var run = function () { return __awaiter(_this, void 0, void 0, function () {
             case 0:
                 name = core_1.getInput("name", { required: true });
                 type = core_1.getInput("type", { required: true });
-                cwd = core_1.getInput("cwd");
+                cwd = core_1.getInput("cwd", { required: true });
                 adapter = adapters[type];
                 if (!adapter) {
                     throw new Error("Unsupported project type: " + type + ".");

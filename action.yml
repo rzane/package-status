@@ -4,7 +4,6 @@ inputs:
   type:
     description: "The type of package (npm, gem, or hex)"
     required: true
-    default: "npm"
   name:
     description: "Name of your package"
     required: true

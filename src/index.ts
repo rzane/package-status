@@ -9,7 +9,7 @@ const adapters: Record<string, Adapter> = { gem, hex, npm };
 const run = async () => {
   const name = getInput("name", { required: true });
   const type = getInput("type", { required: true });
-  const cwd = getInput("cwd");
+  const cwd = getInput("cwd", { required: true });
 
   const adapter = adapters[type];
   if (!adapter) {
