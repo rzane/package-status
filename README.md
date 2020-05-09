@@ -34,7 +34,9 @@ Indicates that the current version has already been published.
 
 ## Example usage
 
-uses: package-status
+```yaml
+uses: rzane/package-status
 with:
-name: "my-npm-package"
-type: "npm"
+  name: "my-npm-package"
+  type: "npm"
+```
