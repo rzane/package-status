@@ -19,4 +19,4 @@ outputs:
     description: "Indicates that your package is published"
 runs:
   using: "node12"
-  main: "index.js"
+  main: "action/index.js"

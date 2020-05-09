@@ -1,12 +1,16 @@
-import { getInput, setOutput, info, setFailed } from "@actions/core";
-import { Config, PackageType, Result } from "./types";
+import { info, getInput, setOutput, setFailed } from "@actions/core";
 import { gem } from "./gem";
 import { hex } from "./hex";
 import { npm } from "./npm";
+import { Adapter } from "./types";
 
-const adapters = { gem, hex, npm };
+const adapters: Record<string, Adapter> = { gem, hex, npm };
 
-export const run = async ({ name, type, cwd }: Config): Promise<Result> => {
+const run = async () => {
+  const name = getInput("name", { required: true });
+  const type = getInput("type", { required: true });
+  const cwd = getInput("cwd");
+
   const adapter = adapters[type];
   if (!adapter) {
     throw new Error(`Unsupported project type: ${type}.`);
@@ -15,23 +19,13 @@ export const run = async ({ name, type, cwd }: Config): Promise<Result> => {
   const version = await adapter.getVersion(cwd, name);
   const published = await adapter.isPublished(name, version);
 
+  const state = published ? "already" : "not";
+  info(`${name} version ${version} has ${state} been published.`);
+
+  setOutput("version", version);
+  setOutput("published", published);
+
   return { version, published };
 };
 
-export const runAction = async () => {
-  const cwd = getInput("cwd");
-  const name = getInput("name", { required: true });
-  const type = getInput("type", { required: true }) as PackageType;
-
-  try {
-    const { version, published } = await run({ cwd, type, name });
-
-    const state = published ? "already" : "not";
-    info(`${name} version ${version} has ${state} been published.`);
-
-    setOutput("version", version);
-    setOutput("published", published);
-  } catch (error) {
-    setFailed(error);
-  }
-};
+run().catch((error) => setFailed(error));
