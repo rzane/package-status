@@ -1,0 +1,22 @@
+name: "Package status"
+description: "Check if the current version of your package is published"
+inputs:
+  type:
+    description: "The type of package (npm, gem, or hex)"
+    required: true
+    default: "npm"
+  name:
+    description: "Name of your package"
+    required: true
+  cwd:
+    description: "The root directory for your package"
+    required: false
+    default: "."
+outputs:
+  version:
+    description: "The local version of your package"
+  published:
+    description: "Indicates that your package is published"
+runs:
+  using: "node12"
+  main: "index.js"

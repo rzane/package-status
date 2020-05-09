@@ -6,7 +6,7 @@ import { npm } from "./npm";
 
 const adapters = { gem, hex, npm };
 
-export const run = async ({ cwd, name, type }: Config): Promise<Result> => {
+export const run = async ({ name, type, cwd }: Config): Promise<Result> => {
   const adapter = adapters[type];
   if (!adapter) {
     throw new Error(`Unsupported project type: ${type}.`);
@@ -19,7 +19,7 @@ export const run = async ({ cwd, name, type }: Config): Promise<Result> => {
 };
 
 export const runAction = async () => {
-  const cwd = getInput("cwd", { required: true });
+  const cwd = getInput("cwd");
   const name = getInput("name", { required: true });
   const type = getInput("type", { required: true }) as PackageType;
 

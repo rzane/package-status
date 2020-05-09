@@ -1,9 +1,9 @@
 export type PackageType = "gem" | "npm" | "hex";
 
 export interface Config {
-  cwd: string;
   name: string;
   type: PackageType;
+  cwd: string;
 }
 
 export interface Adapter {

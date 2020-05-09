@@ -5,6 +5,7 @@
     "got": "^11.1.2"
   },
   "devDependencies": {
-    "@types/node": "^13.13.5"
+    "@types/node": "^13.13.5",
+    "ncc": "^0.3.6"
   }
 }
