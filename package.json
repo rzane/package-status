@@ -7,7 +7,7 @@
   "scripts": {
     "test": "jest",
     "prepack": "tsc -b .",
-    "cli": "ts-node src/runners/cli.ts"
+    "is-unpublished": "ts-node src/runners/cli.ts"
   },
   "bin": {
     "is-unpublished": "lib/runners/cli.js"
