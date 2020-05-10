@@ -90,7 +90,7 @@ Make sure to set `NPM_TOKEN` in your repo settings.
     release_name: v${{ steps.check.outputs.version }}
 ```
 
-### RubyGems
+### Publish to RubyGems
 
 Make sure to set `RUBYGEMS_TOKEN` in your repo settings.
 
