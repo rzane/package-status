@@ -6,8 +6,8 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "test": "jest",
-    "start": "ts-node src/index.ts",
-    "build": "ncc build -t src/index.ts -o action"
+    "build": "ncc build -t src/index.ts -o action",
+    "is-unpublished": "ts-node src/index.ts"
   },
   "bin": {
     "is-unpublished": "lib/index.js"
