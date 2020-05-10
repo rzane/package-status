@@ -6,6 +6,8 @@ inputs:
     required: false
     default: "."
 outputs:
+  version:
+    description: "Your current package version"
   is-unpublished:
     description: "Is your package unpublished?"
 runs:

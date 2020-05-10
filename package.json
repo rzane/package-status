@@ -30,8 +30,10 @@
   },
   "dependencies": {
     "@actions/core": "^1.2.4",
+    "@types/minimist": "^1.2.0",
     "execa": "^4.0.1",
-    "got": "^11.1.2"
+    "got": "^11.1.2",
+    "minimist": "^1.2.5"
   },
   "devDependencies": {
     "@types/jest": "^25.2.1",
