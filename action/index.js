@@ -305,30 +305,6 @@ exports.ParseError = ParseError;
 
 /***/ }),
 
-/***/ 39:
-/***/ (function(module) {
-
-"use strict";
-
-
-const pathKey = (options = {}) => {
-	const environment = options.env || process.env;
-	const platform = options.platform || process.platform;
-
-	if (platform !== 'win32') {
-		return 'PATH';
-	}
-
-	return Object.keys(environment).reverse().find(key => key.toUpperCase() === 'PATH') || 'Path';
-};
-
-module.exports = pathKey;
-// TODO: Remove this for the next major release
-module.exports.default = pathKey;
-
-
-/***/ }),
-
 /***/ 48:
 /***/ (function(__unusedmodule, exports) {
 
@@ -650,10 +626,11 @@ module.exports.default = normalizeUrl;
 "use strict";
 
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
@@ -684,34 +661,27 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
-var got_1 = __importDefault(__webpack_require__(77));
+var fs_1 = __webpack_require__(747);
 var path_1 = __webpack_require__(622);
-var getVersion = function (cwd) { return __awaiter(_this, void 0, void 0, function () {
-    var pkg, version;
-    return __generator(this, function (_a) {
-        pkg = path_1.join(cwd, "package.json");
-        version = require(pkg).version;
-        return [2 /*return*/, version];
-    });
-}); };
-var isPublished = function (name, version) { return __awaiter(_this, void 0, void 0, function () {
-    var slug, statusCode;
+var isFound_1 = __webpack_require__(904);
+var getVersion = function (cwd) { return __awaiter(void 0, void 0, void 0, function () {
+    var file, data;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                slug = encodeURIComponent(name);
-                return [4 /*yield*/, got_1.default("https://registry.npmjs.org/" + slug + "/" + version)];
+                file = path_1.join(cwd, "package.json");
+                return [4 /*yield*/, fs_1.promises.readFile(file, "utf-8")];
             case 1:
-                statusCode = (_a.sent()).statusCode;
-                return [2 /*return*/, statusCode !== 404];
+                data = _a.sent();
+                return [2 /*return*/, JSON.parse(data).version];
         }
     });
 }); };
+var isPublished = function (name, version) {
+    var slug = encodeURIComponent(name);
+    return isFound_1.isFound("https://registry.npmjs.org/" + slug + "/" + version);
+};
 exports.npm = {
     getVersion: getVersion,
     isPublished: isPublished,
@@ -844,6 +814,30 @@ module.exports = got;
 module.exports.default = got;
 __export(__webpack_require__(903));
 __export(__webpack_require__(577));
+
+
+/***/ }),
+
+/***/ 78:
+/***/ (function(module) {
+
+"use strict";
+
+
+const pathKey = (options = {}) => {
+	const environment = options.env || process.env;
+	const platform = options.platform || process.platform;
+
+	if (platform !== 'win32') {
+		return 'PATH';
+	}
+
+	return Object.keys(environment).reverse().find(key => key.toUpperCase() === 'PATH') || 'Path';
+};
+
+module.exports = pathKey;
+// TODO: Remove this for the next major release
+module.exports.default = pathKey;
 
 
 /***/ }),
@@ -2998,10 +2992,11 @@ module.exports = isStream;
 "use strict";
 
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
@@ -3032,14 +3027,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(470);
 var gem_1 = __webpack_require__(865);
 var hex_1 = __webpack_require__(521);
 var npm_1 = __webpack_require__(62);
 var adapters = { gem: gem_1.gem, hex: hex_1.hex, npm: npm_1.npm };
-var run = function () { return __awaiter(_this, void 0, void 0, function () {
+var run = function () { return __awaiter(void 0, void 0, void 0, function () {
     var name, type, cwd, adapter, version, published, state;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -4071,8 +4065,8 @@ module.exports = object => {
 
 
 const path = __webpack_require__(622);
-const which = __webpack_require__(814);
-const pathKey = __webpack_require__(39)();
+const which = __webpack_require__(968);
+const pathKey = __webpack_require__(78)();
 
 function resolveCommandAttempt(parsed, withoutPathExt) {
     const cwd = process.cwd();
@@ -4562,10 +4556,11 @@ module.exports = {
 "use strict";
 
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
@@ -4599,12 +4594,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var execa_1 = __importDefault(__webpack_require__(955));
-var got_1 = __importDefault(__webpack_require__(77));
-var getVersion = function (cwd) { return __awaiter(_this, void 0, void 0, function () {
-    var args, stdout;
+var isFound_1 = __webpack_require__(904);
+var getVersion = function (cwd) { return __awaiter(void 0, void 0, void 0, function () {
+    var args, stdout, version;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -4612,21 +4606,14 @@ var getVersion = function (cwd) { return __awaiter(_this, void 0, void 0, functi
                 return [4 /*yield*/, execa_1.default("mix", args, { cwd: cwd })];
             case 1:
                 stdout = (_a.sent()).stdout;
-                return [2 /*return*/, stdout.trim()];
+                version = stdout.trim().split("\n").slice(-1)[0];
+                return [2 /*return*/, version];
         }
     });
 }); };
-var isPublished = function (name, version) { return __awaiter(_this, void 0, void 0, function () {
-    var statusCode;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, got_1.default("https://hex.pm/api/packages/" + name + "/releases/" + version)];
-            case 1:
-                statusCode = (_a.sent()).statusCode;
-                return [2 /*return*/, statusCode !== 404];
-        }
-    });
-}); };
+var isPublished = function (name, version) {
+    return isFound_1.isFound("https://hex.pm/api/packages/" + name + "/releases/" + version);
+};
 exports.hex = {
     getVersion: getVersion,
     isPublished: isPublished,
@@ -6384,7 +6371,7 @@ module.exports = require("events");
 "use strict";
 
 const path = __webpack_require__(622);
-const pathKey = __webpack_require__(39);
+const pathKey = __webpack_require__(682);
 
 const npmRunPath = options => {
 	options = {
@@ -6578,6 +6565,30 @@ if (process.platform === 'linux') {
 /***/ (function(module) {
 
 module.exports = require("util");
+
+/***/ }),
+
+/***/ 682:
+/***/ (function(module) {
+
+"use strict";
+
+
+const pathKey = (options = {}) => {
+	const environment = options.env || process.env;
+	const platform = options.platform || process.platform;
+
+	if (platform !== 'win32') {
+		return 'PATH';
+	}
+
+	return Object.keys(environment).reverse().find(key => key.toUpperCase() === 'PATH') || 'Path';
+};
+
+module.exports = pathKey;
+// TODO: Remove this for the next major release
+module.exports.default = pathKey;
+
 
 /***/ }),
 
@@ -7243,138 +7254,6 @@ exports.default = (request, delays, options) => {
 
 /***/ }),
 
-/***/ 814:
-/***/ (function(module, __unusedexports, __webpack_require__) {
-
-const isWindows = process.platform === 'win32' ||
-    process.env.OSTYPE === 'cygwin' ||
-    process.env.OSTYPE === 'msys'
-
-const path = __webpack_require__(622)
-const COLON = isWindows ? ';' : ':'
-const isexe = __webpack_require__(742)
-
-const getNotFoundError = (cmd) =>
-  Object.assign(new Error(`not found: ${cmd}`), { code: 'ENOENT' })
-
-const getPathInfo = (cmd, opt) => {
-  const colon = opt.colon || COLON
-
-  // If it has a slash, then we don't bother searching the pathenv.
-  // just check the file itself, and that's it.
-  const pathEnv = cmd.match(/\//) || isWindows && cmd.match(/\\/) ? ['']
-    : (
-      [
-        // windows always checks the cwd first
-        ...(isWindows ? [process.cwd()] : []),
-        ...(opt.path || process.env.PATH ||
-          /* istanbul ignore next: very unusual */ '').split(colon),
-      ]
-    )
-  const pathExtExe = isWindows
-    ? opt.pathExt || process.env.PATHEXT || '.EXE;.CMD;.BAT;.COM'
-    : ''
-  const pathExt = isWindows ? pathExtExe.split(colon) : ['']
-
-  if (isWindows) {
-    if (cmd.indexOf('.') !== -1 && pathExt[0] !== '')
-      pathExt.unshift('')
-  }
-
-  return {
-    pathEnv,
-    pathExt,
-    pathExtExe,
-  }
-}
-
-const which = (cmd, opt, cb) => {
-  if (typeof opt === 'function') {
-    cb = opt
-    opt = {}
-  }
-  if (!opt)
-    opt = {}
-
-  const { pathEnv, pathExt, pathExtExe } = getPathInfo(cmd, opt)
-  const found = []
-
-  const step = i => new Promise((resolve, reject) => {
-    if (i === pathEnv.length)
-      return opt.all && found.length ? resolve(found)
-        : reject(getNotFoundError(cmd))
-
-    const ppRaw = pathEnv[i]
-    const pathPart = /^".*"$/.test(ppRaw) ? ppRaw.slice(1, -1) : ppRaw
-
-    const pCmd = path.join(pathPart, cmd)
-    const p = !pathPart && /^\.[\\\/]/.test(cmd) ? cmd.slice(0, 2) + pCmd
-      : pCmd
-
-    resolve(subStep(p, i, 0))
-  })
-
-  const subStep = (p, i, ii) => new Promise((resolve, reject) => {
-    if (ii === pathExt.length)
-      return resolve(step(i + 1))
-    const ext = pathExt[ii]
-    isexe(p + ext, { pathExt: pathExtExe }, (er, is) => {
-      if (!er && is) {
-        if (opt.all)
-          found.push(p + ext)
-        else
-          return resolve(p + ext)
-      }
-      return resolve(subStep(p, i, ii + 1))
-    })
-  })
-
-  return cb ? step(0).then(res => cb(null, res), cb) : step(0)
-}
-
-const whichSync = (cmd, opt) => {
-  opt = opt || {}
-
-  const { pathEnv, pathExt, pathExtExe } = getPathInfo(cmd, opt)
-  const found = []
-
-  for (let i = 0; i < pathEnv.length; i ++) {
-    const ppRaw = pathEnv[i]
-    const pathPart = /^".*"$/.test(ppRaw) ? ppRaw.slice(1, -1) : ppRaw
-
-    const pCmd = path.join(pathPart, cmd)
-    const p = !pathPart && /^\.[\\\/]/.test(cmd) ? cmd.slice(0, 2) + pCmd
-      : pCmd
-
-    for (let j = 0; j < pathExt.length; j ++) {
-      const cur = p + pathExt[j]
-      try {
-        const is = isexe.sync(cur, { pathExt: pathExtExe })
-        if (is) {
-          if (opt.all)
-            found.push(cur)
-          else
-            return cur
-        }
-      } catch (ex) {}
-    }
-  }
-
-  if (opt.all && found.length)
-    return found
-
-  if (opt.nothrow)
-    return null
-
-  throw getNotFoundError(cmd)
-}
-
-module.exports = which
-which.sync = whichSync
-
-
-/***/ }),
-
 /***/ 816:
 /***/ (function(module) {
 
@@ -7504,10 +7383,11 @@ module.exports = decompressResponse;
 "use strict";
 
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
@@ -7541,11 +7421,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var execa_1 = __importDefault(__webpack_require__(955));
-var got_1 = __importDefault(__webpack_require__(77));
-var getVersion = function (cwd, name) { return __awaiter(_this, void 0, void 0, function () {
+var isFound_1 = __webpack_require__(904);
+var getVersion = function (cwd, name) { return __awaiter(void 0, void 0, void 0, function () {
     var spec, code, stdout;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -7559,17 +7438,9 @@ var getVersion = function (cwd, name) { return __awaiter(_this, void 0, void 0, 
         }
     });
 }); };
-var isPublished = function (name, version) { return __awaiter(_this, void 0, void 0, function () {
-    var statusCode;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, got_1.default("https://rubygems.org/api/v2/rubygems/" + name + "/versions/" + version + ".json")];
-            case 1:
-                statusCode = (_a.sent()).statusCode;
-                return [2 /*return*/, statusCode !== 404];
-        }
-    });
-}); };
+var isPublished = function (name, version) {
+    return isFound_1.isFound("https://rubygems.org/api/v2/rubygems/" + name + "/versions/" + version + ".json");
+};
 exports.gem = {
     getVersion: getVersion,
     isPublished: isPublished,
@@ -8501,6 +8372,77 @@ const create = (defaults) => {
     return got;
 };
 exports.default = create;
+
+
+/***/ }),
+
+/***/ 904:
+/***/ (function(__unusedmodule, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var got_1 = __importDefault(__webpack_require__(77));
+exports.isFound = function (url) { return __awaiter(void 0, void 0, Promise, function () {
+    var error_1;
+    var _a;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                _b.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, got_1.default(url)];
+            case 1:
+                _b.sent();
+                return [2 /*return*/, true];
+            case 2:
+                error_1 = _b.sent();
+                if (((_a = error_1 === null || error_1 === void 0 ? void 0 : error_1.response) === null || _a === void 0 ? void 0 : _a.statusCode) === 404) {
+                    return [2 /*return*/, false];
+                }
+                throw error_1;
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
 
 
 /***/ }),
@@ -10085,6 +10027,138 @@ module.exports = options => {
 
 	return stream;
 };
+
+
+/***/ }),
+
+/***/ 968:
+/***/ (function(module, __unusedexports, __webpack_require__) {
+
+const isWindows = process.platform === 'win32' ||
+    process.env.OSTYPE === 'cygwin' ||
+    process.env.OSTYPE === 'msys'
+
+const path = __webpack_require__(622)
+const COLON = isWindows ? ';' : ':'
+const isexe = __webpack_require__(742)
+
+const getNotFoundError = (cmd) =>
+  Object.assign(new Error(`not found: ${cmd}`), { code: 'ENOENT' })
+
+const getPathInfo = (cmd, opt) => {
+  const colon = opt.colon || COLON
+
+  // If it has a slash, then we don't bother searching the pathenv.
+  // just check the file itself, and that's it.
+  const pathEnv = cmd.match(/\//) || isWindows && cmd.match(/\\/) ? ['']
+    : (
+      [
+        // windows always checks the cwd first
+        ...(isWindows ? [process.cwd()] : []),
+        ...(opt.path || process.env.PATH ||
+          /* istanbul ignore next: very unusual */ '').split(colon),
+      ]
+    )
+  const pathExtExe = isWindows
+    ? opt.pathExt || process.env.PATHEXT || '.EXE;.CMD;.BAT;.COM'
+    : ''
+  const pathExt = isWindows ? pathExtExe.split(colon) : ['']
+
+  if (isWindows) {
+    if (cmd.indexOf('.') !== -1 && pathExt[0] !== '')
+      pathExt.unshift('')
+  }
+
+  return {
+    pathEnv,
+    pathExt,
+    pathExtExe,
+  }
+}
+
+const which = (cmd, opt, cb) => {
+  if (typeof opt === 'function') {
+    cb = opt
+    opt = {}
+  }
+  if (!opt)
+    opt = {}
+
+  const { pathEnv, pathExt, pathExtExe } = getPathInfo(cmd, opt)
+  const found = []
+
+  const step = i => new Promise((resolve, reject) => {
+    if (i === pathEnv.length)
+      return opt.all && found.length ? resolve(found)
+        : reject(getNotFoundError(cmd))
+
+    const ppRaw = pathEnv[i]
+    const pathPart = /^".*"$/.test(ppRaw) ? ppRaw.slice(1, -1) : ppRaw
+
+    const pCmd = path.join(pathPart, cmd)
+    const p = !pathPart && /^\.[\\\/]/.test(cmd) ? cmd.slice(0, 2) + pCmd
+      : pCmd
+
+    resolve(subStep(p, i, 0))
+  })
+
+  const subStep = (p, i, ii) => new Promise((resolve, reject) => {
+    if (ii === pathExt.length)
+      return resolve(step(i + 1))
+    const ext = pathExt[ii]
+    isexe(p + ext, { pathExt: pathExtExe }, (er, is) => {
+      if (!er && is) {
+        if (opt.all)
+          found.push(p + ext)
+        else
+          return resolve(p + ext)
+      }
+      return resolve(subStep(p, i, ii + 1))
+    })
+  })
+
+  return cb ? step(0).then(res => cb(null, res), cb) : step(0)
+}
+
+const whichSync = (cmd, opt) => {
+  opt = opt || {}
+
+  const { pathEnv, pathExt, pathExtExe } = getPathInfo(cmd, opt)
+  const found = []
+
+  for (let i = 0; i < pathEnv.length; i ++) {
+    const ppRaw = pathEnv[i]
+    const pathPart = /^".*"$/.test(ppRaw) ? ppRaw.slice(1, -1) : ppRaw
+
+    const pCmd = path.join(pathPart, cmd)
+    const p = !pathPart && /^\.[\\\/]/.test(cmd) ? cmd.slice(0, 2) + pCmd
+      : pCmd
+
+    for (let j = 0; j < pathExt.length; j ++) {
+      const cur = p + pathExt[j]
+      try {
+        const is = isexe.sync(cur, { pathExt: pathExtExe })
+        if (is) {
+          if (opt.all)
+            found.push(cur)
+          else
+            return cur
+        }
+      } catch (ex) {}
+    }
+  }
+
+  if (opt.all && found.length)
+    return found
+
+  if (opt.nothrow)
+    return null
+
+  throw getNotFoundError(cmd)
+}
+
+module.exports = which
+which.sync = whichSync
 
 
 /***/ }),
