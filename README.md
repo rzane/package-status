@@ -24,9 +24,18 @@ This tool supports the following package formats:
 - [`gem`](https://rubygems.org)
 - [`hex`](https://hex.pm)
 
+## Binary releases
+
+If you don't have the ability to install NPM packages in your environment, you can install a binary release.
+
+    $ curl -L https://github.com/rzane/is-unpublished/releases/download/v0.3.3/is-unpublished-`uname -s`-`uname -m` > is-unpublished
+    $ chmod +x is-unpublished
+    $ ./is-unpublished --version
+    0.3.3
+
 ## Github Action
 
-You can also use this package as a Github action.
+You can also use this package as a Github action. The action version coincides with the published NPM package version.
 
 ## Inputs
 
@@ -63,7 +72,7 @@ Make sure to set `NPM_TOKEN` in your repo settings.
 
 - name: Check
   id: check
-  uses: rzane/is-unpublished@v1
+  uses: rzane/is-unpublished@v0.3.3
 
 - name: Publish
   run: yarn install && yarn publish --access public
@@ -94,7 +103,7 @@ Make sure to set `RUBYGEMS_TOKEN` in your repo settings.
 
 - name: Check
   id: check
-  uses: rzane/is-unpublished@v1
+  uses: rzane/is-unpublished@v0.3.3
 
 - name: Publish
   if: ${{ steps.check.outputs.is-unpublished == 'true' }}
