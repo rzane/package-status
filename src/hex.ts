@@ -1,6 +1,6 @@
 import exec from "execa";
-import got from "got";
 import { Adapter } from "./types";
+import { isFound } from "./isFound";
 
 const getVersion = async (cwd: string) => {
   const args = ["run", "-e", "IO.puts(Mix.Project.config()[:version])"];
@@ -9,12 +9,8 @@ const getVersion = async (cwd: string) => {
   return version;
 };
 
-const isPublished = async (name: string, version: string) => {
-  const { statusCode } = await got(
-    `https://hex.pm/api/packages/${name}/releases/${version}`
-  );
-
-  return statusCode !== 404;
+const isPublished = (name: string, version: string) => {
+  return isFound(`https://hex.pm/api/packages/${name}/releases/${version}`);
 };
 
 export const hex: Adapter = {

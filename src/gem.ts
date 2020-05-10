@@ -1,6 +1,6 @@
 import exec from "execa";
-import got from "got";
 import { Adapter } from "./types";
+import { isFound } from "./isFound";
 
 const getVersion = async (cwd: string, name: string) => {
   const spec = `${name}.gemspec`;
@@ -9,12 +9,10 @@ const getVersion = async (cwd: string, name: string) => {
   return stdout.trim();
 };
 
-const isPublished = async (name: string, version: string) => {
-  const { statusCode } = await got(
+const isPublished = (name: string, version: string) => {
+  return isFound(
     `https://rubygems.org/api/v2/rubygems/${name}/versions/${version}.json`
   );
-
-  return statusCode !== 404;
 };
 
 export const gem: Adapter = {

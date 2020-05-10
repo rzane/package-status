@@ -1,7 +1,7 @@
-import got from "got";
 import { promises as fs } from "fs";
 import { join } from "path";
 import { Adapter } from "./types";
+import { isFound } from "./isFound";
 
 const getVersion = async (cwd: string) => {
   const file = join(cwd, "package.json");
@@ -9,14 +9,9 @@ const getVersion = async (cwd: string) => {
   return JSON.parse(data).version;
 };
 
-const isPublished = async (name: string, version: string) => {
+const isPublished = (name: string, version: string) => {
   const slug = encodeURIComponent(name);
-
-  const { statusCode } = await got(
-    `https://registry.npmjs.org/${slug}/${version}`
-  );
-
-  return statusCode !== 404;
+  return isFound(`https://registry.npmjs.org/${slug}/${version}`);
 };
 
 export const npm: Adapter = {
