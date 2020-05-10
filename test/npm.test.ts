@@ -13,7 +13,7 @@ describe("npm", () => {
     nock.disableNetConnect();
   });
 
-  test("getVersion", async () => {
+  test("getProject", async () => {
     const cwd = join(__dirname, "fixtures", "npm");
     const { name, version } = await npm.getProject(cwd);
     expect(name).toEqual("example");
