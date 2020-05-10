@@ -1,42 +1,25 @@
-# package-status
+<h1 align="center">is-unpublished</h1>
 
-This is a GitHub action that will allow you to publish your package whenever the version number changes.
+<div align="center">
 
-It will detect the current version of your package and check the package registry for a corresponding entry.
+![Build](https://github.com/rzane/is-unpublished/workflows/CI/badge.svg)
+![Version](https://img.shields.io/npm/v/is-unpublished)
+![License](https://img.shields.io/npm/l/is-unpublished)
 
-## Inputs
+</div>
 
-### `name`
+A scripting tool for CI environments to determine if your package needs to be published.
 
-**Required** The name of your package
+```bash
+npm install -g is-unpublished
 
-### `type`
-
-**Required** The type of package you are developing. Must be one of the following:
-
-- [`gem`](https://rubygems.org)
-- [`npm`](https://npmjs.org)
-- [`hex`](https://hex.pm)
-
-### `cwd`
-
-Use this if your package lives in a subdirectory.
-
-## Outputs
-
-### `version`
-
-Reflects the version that is specified in the committed code.
-
-### `published`
-
-Indicates that the current version has already been published.
-
-## Example usage
-
-```yaml
-uses: rzane/package-status@v2
-with:
-  name: "my-npm-package"
-  type: "npm"
+if is-unpublished; then
+  # Do whatever you need to do to publish your package!
+fi
 ```
+
+This tool supports the following package formats:
+
+- [`npm`](https://npmjs.org)
+- [`gem`](https://rubygems.org)
+- [`hex`](https://hex.pm)
