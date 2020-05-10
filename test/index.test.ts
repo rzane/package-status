@@ -4,9 +4,9 @@ import { run } from "../src";
 
 const { version } = require("../package.json");
 
-const host = "https://rubygems.org";
-const path = "/api/v2/rubygems/example/versions/1.2.3.json";
-const fixture = join(__dirname, "fixtures", "gem");
+const host = "https://registry.npmjs.org";
+const path = "/example";
+const fixture = join(__dirname, "fixtures", "npm");
 
 describe("run", () => {
   beforeEach(() => {
@@ -47,7 +47,8 @@ describe("run", () => {
   });
 
   test("a published package", async () => {
-    nock(host).get(path).reply(200);
+    const body = JSON.stringify({ versions: { "1.2.3": {} } });
+    nock(host).get(path).reply(200, body);
 
     const { status, stdout } = await run([fixture]);
     expect(status).toEqual(1);
