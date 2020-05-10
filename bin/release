@@ -33,4 +33,5 @@ yarn publish --access public --no-git-tag-version --non-interactive
 hub release create \
   -a pkg/is-unpublished-Linux-x86_64 \
   -a pkg/is-unpublished-Darwin-x86_64 \
+  -m "$tag" \
   "$tag"
