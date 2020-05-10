@@ -43,18 +43,20 @@ Indicates that your package hasn't been published yet.
 ## Example usage
 
 ```yaml
-- name: Check if package needs to be published
+- name: Check
+  id: check
   uses: rzane/is-unpublished@v2
-  id: is-unpublished
+
 - name: Publish
   run: yarn publish
-  if: ${{ steps.is-unpublished.outputs.is-unpublished == 'true' }}
-- name: Create a release
+  if: ${{ steps.check.outputs.is-unpublished == 'true' }}
+
+- name: Release
   uses: actions/create-release@v1
-  if: ${{ steps.is-unpublished.outputs.is-unpublished == 'true' }}
+  if: ${{ steps.check.outputs.is-unpublished == 'true' }}
   env:
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   with:
-    tag_name: v${{ steps.is-unpublished.outputs.version }}
-    release_name: Release v${{ steps.is-unpublished.outputs.version }}
+    tag_name: v${{ steps.check.outputs.version }}
+    release_name: v${{ steps.check.outputs.version }}
 ```
