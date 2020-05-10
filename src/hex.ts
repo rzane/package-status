@@ -5,7 +5,8 @@ import { Adapter } from "./types";
 const getVersion = async (cwd: string) => {
   const args = ["run", "-e", "IO.puts(Mix.Project.config()[:version])"];
   const { stdout } = await exec("mix", args, { cwd });
-  return stdout.trim();
+  const [version] = stdout.trim().split("\n").slice(-1);
+  return version;
 };
 
 const isPublished = async (name: string, version: string) => {

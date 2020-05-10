@@ -2,7 +2,12 @@
   "name": "package-status",
   "license": "MIT",
   "scripts": {
+    "test": "jest",
     "build": "ncc build -t src/index.ts -o action"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
   },
   "dependencies": {
     "@actions/core": "^1.2.4",
@@ -10,7 +15,11 @@
     "got": "^11.1.2"
   },
   "devDependencies": {
+    "@types/jest": "^25.2.1",
     "@types/node": "^13.13.5",
-    "@zeit/ncc": "^0.22.1"
+    "@zeit/ncc": "^0.22.1",
+    "jest": "^25.5.4",
+    "ts-jest": "^25.5.1",
+    "typescript": "^3.8.3"
   }
 }

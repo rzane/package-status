@@ -1,11 +1,12 @@
 import got from "got";
+import { promises as fs } from "fs";
 import { join } from "path";
 import { Adapter } from "./types";
 
 const getVersion = async (cwd: string) => {
-  const pkg = join(cwd, "package.json");
-  const { version } = require(pkg);
-  return version;
+  const file = join(cwd, "package.json");
+  const data = await fs.readFile(file, "utf-8");
+  return JSON.parse(data).version;
 };
 
 const isPublished = async (name: string, version: string) => {
