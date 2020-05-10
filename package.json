@@ -1,12 +1,12 @@
 {
   "name": "is-unpublished",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "MIT",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
     "test": "jest",
-    "build": "ncc build -t src/index.ts -o action",
+    "prepack": "tsc -b .",
     "is-unpublished": "ts-node src/index.ts"
   },
   "bin": {
