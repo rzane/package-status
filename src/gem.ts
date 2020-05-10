@@ -1,6 +1,6 @@
 import exec from "execa";
 import { Adapter } from "./types";
-import { isFound } from "./isFound";
+import { isFound } from "./utils";
 
 const getVersion = async (cwd: string, name: string) => {
   const spec = `${name}.gemspec`;
