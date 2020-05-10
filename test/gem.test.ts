@@ -12,9 +12,10 @@ describe("gem", () => {
     nock.disableNetConnect();
   });
 
-  test("getVersion", async () => {
+  test("getProject", async () => {
     const cwd = join(__dirname, "fixtures", "gem");
-    const version = await gem.getVersion(cwd, "example");
+    const { name, version } = await gem.getProject(cwd);
+    expect(name).toEqual("example");
     expect(version).toEqual("1.2.3");
   });
 

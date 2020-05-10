@@ -15,7 +15,8 @@ describe("npm", () => {
 
   test("getVersion", async () => {
     const cwd = join(__dirname, "fixtures", "npm");
-    const version = await npm.getVersion(cwd, "example");
+    const { name, version } = await npm.getProject(cwd);
+    expect(name).toEqual("example");
     expect(version).toEqual("1.2.3");
   });
 

@@ -12,9 +12,10 @@ describe("hex", () => {
     nock.disableNetConnect();
   });
 
-  test("getVersion", async () => {
+  test("getProject", async () => {
     const cwd = join(__dirname, "fixtures", "hex");
-    const version = await hex.getVersion(cwd, "example");
+    const { name, version } = await hex.getProject(cwd);
+    expect(name).toEqual("example");
     expect(version).toEqual("1.2.3");
   });
 
