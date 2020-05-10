@@ -1,0 +1,15 @@
+name: "Unpublished"
+description: "Does your package need to be published?"
+inputs:
+  cwd:
+    description: "The directory your package lives in"
+    required: false
+    default: "."
+outputs:
+  is-unpublished:
+    description: "Is your package unpublished?"
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  args:
+    - ${{ inputs.cwd }}

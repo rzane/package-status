@@ -23,3 +23,28 @@ This tool supports the following package formats:
 - [`npm`](https://npmjs.org)
 - [`gem`](https://rubygems.org)
 - [`hex`](https://hex.pm)
+
+## Github Action
+
+You can also use this package as a Github action.
+
+## Inputs
+
+### `cwd`
+
+The directory your package lives in.
+
+## Outputs
+
+### `is-unpublished`
+
+Indicates that your package hasn't been published yet.
+
+## Example usage
+
+```yaml
+- uses: rzane/is-unpublished@v1
+  id: is-unpublished
+- run: yarn publish
+  if: steps.is-unpublished.outputs.is-unpublished == 'true'
+```
