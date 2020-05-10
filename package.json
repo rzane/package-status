@@ -1,12 +1,11 @@
 {
   "name": "is-unpublished",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "license": "MIT",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
     "test": "jest",
-    "prepack": "tsc -b .",
     "is-unpublished": "ts-node src/runners/cli.ts"
   },
   "bin": {

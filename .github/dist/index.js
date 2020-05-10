@@ -34,7 +34,7 @@ module.exports =
 /******/ 	// the startup function
 /******/ 	function startup() {
 /******/ 		// Load entry module and return exports
-/******/ 		return __webpack_require__(522);
+/******/ 		return __webpack_require__(223);
 /******/ 	};
 /******/
 /******/ 	// run startup
@@ -42,114 +42,6 @@ module.exports =
 /******/ })
 /************************************************************************/
 /******/ ({
-
-/***/ 7:
-/***/ (function(__unusedmodule, exports, __webpack_require__) {
-
-"use strict";
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var execa_1 = __importDefault(__webpack_require__(955));
-var fs_1 = __webpack_require__(747);
-var utils_1 = __webpack_require__(581);
-var findGemspec = function (cwd) { return __awaiter(void 0, void 0, void 0, function () {
-    var files;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, fs_1.promises.readdir(cwd)];
-            case 1:
-                files = _a.sent();
-                return [2 /*return*/, files.find(function (file) { return /\.gemspec$/.test(file); })];
-        }
-    });
-}); };
-var getProperty = function (cwd, gemspec, key) { return __awaiter(void 0, void 0, void 0, function () {
-    var code, stdout, value;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                code = "puts Gem::Specification.load(\"" + gemspec + "\")." + key;
-                return [4 /*yield*/, execa_1.default("ruby", ["-e", code], { cwd: cwd })];
-            case 1:
-                stdout = (_a.sent()).stdout;
-                value = stdout.trim().split("\n").slice(-1)[0];
-                return [2 /*return*/, value];
-        }
-    });
-}); };
-var isProject = function (cwd) {
-    return findGemspec(cwd).then(Boolean);
-};
-var getProject = function (cwd) { return __awaiter(void 0, void 0, void 0, function () {
-    var gemspec, _a, name, version;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
-            case 0: return [4 /*yield*/, findGemspec(cwd)];
-            case 1:
-                gemspec = _b.sent();
-                if (!gemspec) {
-                    throw new Error("Gem specification not found.");
-                }
-                return [4 /*yield*/, Promise.all([
-                        getProperty(cwd, gemspec, "name"),
-                        getProperty(cwd, gemspec, "version"),
-                    ])];
-            case 2:
-                _a = _b.sent(), name = _a[0], version = _a[1];
-                return [2 /*return*/, { name: name, version: version }];
-        }
-    });
-}); };
-var isPublished = function (name, version) {
-    return utils_1.isFound("https://rubygems.org/api/v2/rubygems/" + name + "/versions/" + version + ".json");
-};
-exports.gem = {
-    isProject: isProject,
-    getProject: getProject,
-    isPublished: isPublished,
-};
-
-
-/***/ }),
 
 /***/ 9:
 /***/ (function(module, __unusedexports, __webpack_require__) {
@@ -975,6 +867,92 @@ module.exports = Response;
 
 /***/ }),
 
+/***/ 109:
+/***/ (function(__unusedmodule, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var gem_1 = __webpack_require__(183);
+var npm_1 = __webpack_require__(956);
+var hex_1 = __webpack_require__(718);
+var attempt = function (cwd) { return __awaiter(void 0, void 0, void 0, function () {
+    var _i, _a, adapter;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                _i = 0, _a = [gem_1.gem, hex_1.hex, npm_1.npm];
+                _b.label = 1;
+            case 1:
+                if (!(_i < _a.length)) return [3 /*break*/, 4];
+                adapter = _a[_i];
+                return [4 /*yield*/, adapter.isProject(cwd)];
+            case 2:
+                if (_b.sent()) {
+                    return [2 /*return*/, adapter];
+                }
+                _b.label = 3;
+            case 3:
+                _i++;
+                return [3 /*break*/, 1];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); };
+exports.detect = function (cwd) { return __awaiter(void 0, void 0, void 0, function () {
+    var adapter;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, attempt(cwd)];
+            case 1:
+                adapter = _a.sent();
+                if (!adapter) {
+                    throw new Error("Failed to determine package type.");
+                }
+                return [2 /*return*/, adapter];
+        }
+    });
+}); };
+
+
+/***/ }),
+
 /***/ 129:
 /***/ (function(module) {
 
@@ -1764,24 +1742,6 @@ module.exports = {
 
 /***/ }),
 
-/***/ 162:
-/***/ (function(__unusedmodule, exports) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.getDescription = function (name, version, published) {
-    if (published) {
-        return name + " version " + version + " has already been published\n";
-    }
-    else {
-        return name + " version " + version + " has not been published\n";
-    }
-};
-
-
-/***/ }),
-
 /***/ 168:
 /***/ (function(module) {
 
@@ -2262,6 +2222,114 @@ module.exports = ClientRequest;
 
 /***/ }),
 
+/***/ 183:
+/***/ (function(__unusedmodule, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var execa_1 = __importDefault(__webpack_require__(955));
+var fs_1 = __webpack_require__(747);
+var utils_1 = __webpack_require__(498);
+var findGemspec = function (cwd) { return __awaiter(void 0, void 0, void 0, function () {
+    var files;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, fs_1.promises.readdir(cwd)];
+            case 1:
+                files = _a.sent();
+                return [2 /*return*/, files.find(function (file) { return /\.gemspec$/.test(file); })];
+        }
+    });
+}); };
+var getProperty = function (cwd, gemspec, key) { return __awaiter(void 0, void 0, void 0, function () {
+    var code, stdout, value;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                code = "puts Gem::Specification.load(\"" + gemspec + "\")." + key;
+                return [4 /*yield*/, execa_1.default("ruby", ["-e", code], { cwd: cwd })];
+            case 1:
+                stdout = (_a.sent()).stdout;
+                value = stdout.trim().split("\n").slice(-1)[0];
+                return [2 /*return*/, value];
+        }
+    });
+}); };
+var isProject = function (cwd) {
+    return findGemspec(cwd).then(Boolean);
+};
+var getProject = function (cwd) { return __awaiter(void 0, void 0, void 0, function () {
+    var gemspec, _a, name, version;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0: return [4 /*yield*/, findGemspec(cwd)];
+            case 1:
+                gemspec = _b.sent();
+                if (!gemspec) {
+                    throw new Error("Gem specification not found.");
+                }
+                return [4 /*yield*/, Promise.all([
+                        getProperty(cwd, gemspec, "name"),
+                        getProperty(cwd, gemspec, "version"),
+                    ])];
+            case 2:
+                _a = _b.sent(), name = _a[0], version = _a[1];
+                return [2 /*return*/, { name: name, version: version }];
+        }
+    });
+}); };
+var isPublished = function (name, version) {
+    return utils_1.isFound("https://rubygems.org/api/v2/rubygems/" + name + "/versions/" + version + ".json");
+};
+exports.gem = {
+    isProject: isProject,
+    getProject: getProject,
+    isPublished: isPublished,
+};
+
+
+/***/ }),
+
 /***/ 194:
 /***/ (function(module, __unusedexports, __webpack_require__) {
 
@@ -2588,6 +2656,79 @@ module.exports = (fromStream, toStream) => {
 /***/ (function(module) {
 
 module.exports = require("https");
+
+/***/ }),
+
+/***/ 223:
+/***/ (function(__unusedmodule, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__(470);
+var detect_1 = __webpack_require__(109);
+var utils_1 = __webpack_require__(609);
+var run = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var cwd, adapter, _a, name, version, published;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                cwd = core_1.getInput("cwd") || ".";
+                return [4 /*yield*/, detect_1.detect(cwd)];
+            case 1:
+                adapter = _b.sent();
+                return [4 /*yield*/, adapter.getProject(cwd)];
+            case 2:
+                _a = _b.sent(), name = _a.name, version = _a.version;
+                return [4 /*yield*/, adapter.isPublished(name, version)];
+            case 3:
+                published = _b.sent();
+                core_1.setOutput("name", name);
+                core_1.setOutput("version", version);
+                core_1.setOutput("is-unpublished", !published);
+                core_1.info(utils_1.getDescription(name, version, published));
+                return [2 /*return*/];
+        }
+    });
+}); };
+run().catch(function (error) { return core_1.setFailed(error); });
+
 
 /***/ }),
 
@@ -4390,6 +4531,107 @@ function processEmit (ev, arg) {
 
 /***/ }),
 
+/***/ 498:
+/***/ (function(__unusedmodule, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var got_1 = __importDefault(__webpack_require__(77));
+var fs_1 = __webpack_require__(747);
+exports.exists = function (file) { return __awaiter(void 0, void 0, void 0, function () {
+    var error_1;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, fs_1.promises.stat(file)];
+            case 1:
+                _a.sent();
+                return [2 /*return*/, true];
+            case 2:
+                error_1 = _a.sent();
+                if (error_1.code === "ENOENT") {
+                    return [2 /*return*/, false];
+                }
+                else {
+                    throw error_1;
+                }
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
+exports.is404 = function (error) {
+    var _a;
+    return ((_a = error.response) === null || _a === void 0 ? void 0 : _a.statusCode) === 404;
+};
+exports.isFound = function (url) { return __awaiter(void 0, void 0, void 0, function () {
+    var error_2;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, got_1.default(url)];
+            case 1:
+                _a.sent();
+                return [2 /*return*/, true];
+            case 2:
+                error_2 = _a.sent();
+                if (exports.is404(error_2)) {
+                    return [2 /*return*/, false];
+                }
+                else {
+                    throw error_2;
+                }
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
+
+
+/***/ }),
+
 /***/ 507:
 /***/ (function(module) {
 
@@ -4524,79 +4766,6 @@ module.exports = {
 	validateInputSync
 };
 
-
-
-/***/ }),
-
-/***/ 522:
-/***/ (function(__unusedmodule, exports, __webpack_require__) {
-
-"use strict";
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__(470);
-var detect_1 = __webpack_require__(618);
-var utils_1 = __webpack_require__(162);
-var run = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var cwd, adapter, _a, name, version, published;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
-            case 0:
-                cwd = core_1.getInput("cwd") || ".";
-                return [4 /*yield*/, detect_1.detect(cwd)];
-            case 1:
-                adapter = _b.sent();
-                return [4 /*yield*/, adapter.getProject(cwd)];
-            case 2:
-                _a = _b.sent(), name = _a.name, version = _a.version;
-                return [4 /*yield*/, adapter.isPublished(name, version)];
-            case 3:
-                published = _b.sent();
-                core_1.setOutput("name", name);
-                core_1.setOutput("version", version);
-                core_1.setOutput("is-unpublished", !published);
-                core_1.info(utils_1.getDescription(name, version, published));
-                return [2 /*return*/];
-        }
-    });
-}); };
-run().catch(function (error) { return core_1.setFailed(error); });
 
 
 /***/ }),
@@ -6306,107 +6475,6 @@ __export(__webpack_require__(36));
 
 /***/ }),
 
-/***/ 581:
-/***/ (function(__unusedmodule, exports, __webpack_require__) {
-
-"use strict";
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var got_1 = __importDefault(__webpack_require__(77));
-var fs_1 = __webpack_require__(747);
-exports.exists = function (file) { return __awaiter(void 0, void 0, Promise, function () {
-    var error_1;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, fs_1.promises.stat(file)];
-            case 1:
-                _a.sent();
-                return [2 /*return*/, true];
-            case 2:
-                error_1 = _a.sent();
-                if (error_1.code === "ENOENT") {
-                    return [2 /*return*/, false];
-                }
-                else {
-                    throw error_1;
-                }
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
-        }
-    });
-}); };
-exports.is404 = function (error) {
-    var _a;
-    return ((_a = error.response) === null || _a === void 0 ? void 0 : _a.statusCode) === 404;
-};
-exports.isFound = function (url) { return __awaiter(void 0, void 0, Promise, function () {
-    var error_2;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, got_1.default(url)];
-            case 1:
-                _a.sent();
-                return [2 /*return*/, true];
-            case 2:
-                error_2 = _a.sent();
-                if (exports.is404(error_2)) {
-                    return [2 /*return*/, false];
-                }
-                else {
-                    throw error_2;
-                }
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
-        }
-    });
-}); };
-
-
-/***/ }),
-
 /***/ 588:
 /***/ (function(module) {
 
@@ -6438,96 +6506,28 @@ module.exports = require("http");
 
 /***/ }),
 
+/***/ 609:
+/***/ (function(__unusedmodule, exports) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getDescription = function (name, version, published) {
+    if (published) {
+        return name + " version " + version + " has already been published\n";
+    }
+    else {
+        return name + " version " + version + " has not been published\n";
+    }
+};
+
+
+/***/ }),
+
 /***/ 614:
 /***/ (function(module) {
 
 module.exports = require("events");
-
-/***/ }),
-
-/***/ 618:
-/***/ (function(__unusedmodule, exports, __webpack_require__) {
-
-"use strict";
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var gem_1 = __webpack_require__(7);
-var npm_1 = __webpack_require__(939);
-var hex_1 = __webpack_require__(666);
-var attempt = function (cwd) { return __awaiter(void 0, void 0, Promise, function () {
-    var _i, _a, adapter;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
-            case 0:
-                _i = 0, _a = [gem_1.gem, hex_1.hex, npm_1.npm];
-                _b.label = 1;
-            case 1:
-                if (!(_i < _a.length)) return [3 /*break*/, 4];
-                adapter = _a[_i];
-                return [4 /*yield*/, adapter.isProject(cwd)];
-            case 2:
-                if (_b.sent()) {
-                    return [2 /*return*/, adapter];
-                }
-                _b.label = 3;
-            case 3:
-                _i++;
-                return [3 /*break*/, 1];
-            case 4: return [2 /*return*/];
-        }
-    });
-}); };
-exports.detect = function (cwd) { return __awaiter(void 0, void 0, Promise, function () {
-    var adapter;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, attempt(cwd)];
-            case 1:
-                adapter = _a.sent();
-                if (!adapter) {
-                    throw new Error("Failed to determine package type.");
-                }
-                return [2 /*return*/, adapter];
-        }
-    });
-}); };
-
 
 /***/ }),
 
@@ -6727,97 +6727,6 @@ if (process.platform === 'linux') {
 
 /***/ }),
 
-/***/ 666:
-/***/ (function(__unusedmodule, exports, __webpack_require__) {
-
-"use strict";
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var execa_1 = __importDefault(__webpack_require__(955));
-var path_1 = __webpack_require__(622);
-var utils_1 = __webpack_require__(581);
-var getProperty = function (cwd, key) { return __awaiter(void 0, void 0, void 0, function () {
-    var args, stdout, value;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                args = ["run", "-e", "IO.puts(Mix.Project.config()[:" + key + "])"];
-                return [4 /*yield*/, execa_1.default("mix", args, { cwd: cwd })];
-            case 1:
-                stdout = (_a.sent()).stdout;
-                value = stdout.trim().split("\n").slice(-1)[0];
-                return [2 /*return*/, value];
-        }
-    });
-}); };
-var isProject = function (cwd) {
-    return utils_1.exists(path_1.join(cwd, "mix.exs"));
-};
-var getProject = function (cwd) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, name, version;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
-            case 0: return [4 /*yield*/, Promise.all([
-                    getProperty(cwd, "app"),
-                    getProperty(cwd, "version"),
-                ])];
-            case 1:
-                _a = _b.sent(), name = _a[0], version = _a[1];
-                return [2 /*return*/, { name: name, version: version }];
-        }
-    });
-}); };
-var isPublished = function (name, version) {
-    return utils_1.isFound("https://hex.pm/api/packages/" + name + "/releases/" + version);
-};
-exports.hex = {
-    isProject: isProject,
-    getProject: getProject,
-    isPublished: isPublished,
-};
-
-
-/***/ }),
-
 /***/ 669:
 /***/ (function(module) {
 
@@ -6898,6 +6807,97 @@ makeError(TypeError, 'ERR_HTTP_INVALID_HEADER_VALUE', args => {
 makeError(TypeError, 'ERR_INVALID_CHAR', args => {
 	return `Invalid character in ${args[0]} [${args[1]}]`;
 });
+
+
+/***/ }),
+
+/***/ 718:
+/***/ (function(__unusedmodule, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var execa_1 = __importDefault(__webpack_require__(955));
+var path_1 = __webpack_require__(622);
+var utils_1 = __webpack_require__(498);
+var getProperty = function (cwd, key) { return __awaiter(void 0, void 0, void 0, function () {
+    var args, stdout, value;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                args = ["run", "-e", "IO.puts(Mix.Project.config()[:" + key + "])"];
+                return [4 /*yield*/, execa_1.default("mix", args, { cwd: cwd })];
+            case 1:
+                stdout = (_a.sent()).stdout;
+                value = stdout.trim().split("\n").slice(-1)[0];
+                return [2 /*return*/, value];
+        }
+    });
+}); };
+var isProject = function (cwd) {
+    return utils_1.exists(path_1.join(cwd, "mix.exs"));
+};
+var getProject = function (cwd) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, name, version;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0: return [4 /*yield*/, Promise.all([
+                    getProperty(cwd, "app"),
+                    getProperty(cwd, "version"),
+                ])];
+            case 1:
+                _a = _b.sent(), name = _a[0], version = _a[1];
+                return [2 /*return*/, { name: name, version: version }];
+        }
+    });
+}); };
+var isPublished = function (name, version) {
+    return utils_1.isFound("https://hex.pm/api/packages/" + name + "/releases/" + version);
+};
+exports.hex = {
+    isProject: isProject,
+    getProject: getProject,
+    isPublished: isPublished,
+};
 
 
 /***/ }),
@@ -8706,110 +8706,6 @@ exports.default = calculateRetryDelay;
 
 /***/ }),
 
-/***/ 939:
-/***/ (function(__unusedmodule, exports, __webpack_require__) {
-
-"use strict";
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var got_1 = __importDefault(__webpack_require__(77));
-var fs_1 = __webpack_require__(747);
-var path_1 = __webpack_require__(622);
-var utils_1 = __webpack_require__(581);
-var isProject = function (cwd) { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        return [2 /*return*/, utils_1.exists(path_1.join(cwd, "package.json"))];
-    });
-}); };
-var getProject = function (cwd) { return __awaiter(void 0, void 0, void 0, function () {
-    var pkg, data, _a, name, version;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
-            case 0:
-                pkg = path_1.join(cwd, "package.json");
-                return [4 /*yield*/, fs_1.promises.readFile(pkg, "utf-8")];
-            case 1:
-                data = _b.sent();
-                _a = JSON.parse(data), name = _a.name, version = _a.version;
-                return [2 /*return*/, { name: name, version: version }];
-        }
-    });
-}); };
-var isPublished = function (name, version) { return __awaiter(void 0, void 0, void 0, function () {
-    var slug, url, body, error_1;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                slug = encodeURIComponent(name);
-                url = "https://registry.npmjs.org/" + slug;
-                _a.label = 1;
-            case 1:
-                _a.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, got_1.default(url, { responseType: "json" })];
-            case 2:
-                body = (_a.sent()).body;
-                return [2 /*return*/, version in body.versions];
-            case 3:
-                error_1 = _a.sent();
-                if (utils_1.is404(error_1)) {
-                    return [2 /*return*/, false];
-                }
-                else {
-                    throw error_1;
-                }
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
-        }
-    });
-}); };
-exports.npm = {
-    isProject: isProject,
-    getProject: getProject,
-    isPublished: isPublished,
-};
-
-
-/***/ }),
-
 /***/ 946:
 /***/ (function(__unusedmodule, exports, __webpack_require__) {
 
@@ -10184,6 +10080,110 @@ module.exports.node = (scriptPath, args, options = {}) => {
 			shell: false
 		}
 	);
+};
+
+
+/***/ }),
+
+/***/ 956:
+/***/ (function(__unusedmodule, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var got_1 = __importDefault(__webpack_require__(77));
+var fs_1 = __webpack_require__(747);
+var path_1 = __webpack_require__(622);
+var utils_1 = __webpack_require__(498);
+var isProject = function (cwd) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        return [2 /*return*/, utils_1.exists(path_1.join(cwd, "package.json"))];
+    });
+}); };
+var getProject = function (cwd) { return __awaiter(void 0, void 0, void 0, function () {
+    var pkg, data, _a, name, version;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                pkg = path_1.join(cwd, "package.json");
+                return [4 /*yield*/, fs_1.promises.readFile(pkg, "utf-8")];
+            case 1:
+                data = _b.sent();
+                _a = JSON.parse(data), name = _a.name, version = _a.version;
+                return [2 /*return*/, { name: name, version: version }];
+        }
+    });
+}); };
+var isPublished = function (name, version) { return __awaiter(void 0, void 0, void 0, function () {
+    var slug, url, body, error_1;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                slug = encodeURIComponent(name);
+                url = "https://registry.npmjs.org/" + slug;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, got_1.default(url, { responseType: "json" })];
+            case 2:
+                body = (_a.sent()).body;
+                return [2 /*return*/, version in body.versions];
+            case 3:
+                error_1 = _a.sent();
+                if (utils_1.is404(error_1)) {
+                    return [2 /*return*/, false];
+                }
+                else {
+                    throw error_1;
+                }
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); };
+exports.npm = {
+    isProject: isProject,
+    getProject: getProject,
+    isPublished: isPublished,
 };
 
 

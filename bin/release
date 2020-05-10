@@ -1,0 +1,36 @@
+#!/bin/bash
+
+set -euo pipefail
+
+# Bump the version
+yarn version "$@" --no-git-tag-version
+
+# Collect info about our new version
+version=$(node -p "require('./package.json').version")
+tag="v$version"
+
+# Compile everything
+bin/compile
+
+# Update the github action
+rm -rf .github/dist
+cp -r dist .github
+
+# Commit changes
+git add package.json
+git add .github/dist
+git commit -m "Release $tag"
+git push origin master
+
+# Tag the version
+git tag "$tag"
+git push origin "$tag"
+
+# Publish to NPM
+yarn publish --access public --no-git-tag-version --non-interactive
+
+# Create a Github release
+hub release create \
+  -a pkg/is-unpublished-Linux-x86_64 \
+  -a pkg/is-unpublished-Darwin-x86_64 \
+  "$tag"

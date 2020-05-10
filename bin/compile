@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -euo pipefail
+
+rm -rf lib dist pkg
+
+yarn tsc -b .
+yarn ncc build lib/runners/action.js -o dist
+yarn pkg -t node12-linux-x64 -o pkg/is-unpublished-Linux-x86_64 lib/runners/cli.js
+yarn pkg -t node12-macos-x64 -o pkg/is-unpublished-Darwin-x86_64 lib/runners/cli.js

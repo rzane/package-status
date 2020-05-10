@@ -1,2 +1,5 @@
 /node_modules
 /test/fixtures/hex/_build/
+/lib
+/dist
+/pkg
