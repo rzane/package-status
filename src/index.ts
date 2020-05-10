@@ -1,31 +1,80 @@
-import { info, getInput, setOutput, setFailed } from "@actions/core";
+#!/usr/bin/env node
+
 import { gem } from "./gem";
 import { hex } from "./hex";
 import { npm } from "./npm";
-import { Adapter } from "./types";
 
-const adapters: Record<string, Adapter> = { gem, hex, npm };
+const help = `Usage: is-unpublished [cwd] [options]
 
-const run = async () => {
-  const name = getInput("name", { required: true });
-  const type = getInput("type", { required: true });
-  const cwd = getInput("cwd", { required: true });
+Has the current version of this package been published?
 
-  const adapter = adapters[type];
-  if (!adapter) {
-    throw new Error(`Unsupported project type: ${type}.`);
-  }
+Options:
+  -v, --version          output the version number
+  -h, --help             display help for command
+`;
 
-  const version = await adapter.getVersion(cwd, name);
-  const published = await adapter.isPublished(name, version);
-
-  const state = published ? "already" : "not";
-  info(`${name} version ${version} has ${state} been published.`);
-
-  setOutput("version", version);
-  setOutput("published", published);
-
-  return { version, published };
+const hasFlag = (argv: string[], ...flags: string[]) => {
+  return flags.some((flag) => argv.includes(flag));
 };
 
-run().catch((error) => setFailed(error));
+const detectAdapter = async (cwd: string) => {
+  for (const adapter of [gem, hex, npm]) {
+    if (await adapter.isProject(cwd)) {
+      return adapter;
+    }
+  }
+};
+
+const getDescription = (name: string, version: string, published: boolean) => {
+  if (published) {
+    return `${name} version ${version} has already been published\n`;
+  } else {
+    return `${name} version ${version} has not been published\n`;
+  }
+};
+
+export const run = async (argv: string[]) => {
+  /**
+   * Show the help message.
+   */
+  if (hasFlag(argv, "-h", "--help")) {
+    return { status: 0, stdout: help };
+  }
+
+  /**
+   * Print current version of this program.
+   */
+  if (hasFlag(argv, "-v", "--version")) {
+    const pkg = require("../package.json");
+    return { status: 0, stdout: `${pkg.version}\n` };
+  }
+
+  /**
+   * Determine which adapter to use.
+   */
+  const cwd = argv[0] || ".";
+  const adapter = await detectAdapter(cwd);
+  if (!adapter) {
+    return { status: 1, stdout: "Failed to determine package type.\n" };
+  }
+
+  const { name, version } = await adapter.getProject(cwd);
+  const published = await adapter.isPublished(name, version);
+
+  return {
+    status: published ? 1 : 0,
+    stdout: getDescription(name, version, published),
+  };
+};
+
+if (require.main === module) {
+  run(process.argv.slice(2))
+    .then(({ stdout, status }) => {
+      process.stdout.write(stdout);
+      process.exit(status);
+    })
+    .catch((error) => {
+      console.error(error);
+      process.exit(1);
+    });
+}

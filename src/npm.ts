@@ -2,12 +2,17 @@ import got from "got";
 import { promises as fs } from "fs";
 import { join } from "path";
 import { Adapter } from "./types";
-import { is404 } from "./utils";
+import { is404, exists } from "./utils";
 
-const getVersion = async (cwd: string) => {
-  const file = join(cwd, "package.json");
-  const data = await fs.readFile(file, "utf-8");
-  return JSON.parse(data).version;
+const isProject = async (cwd: string) => {
+  return exists(join(cwd, "package.json"));
+};
+
+const getProject = async (cwd: string) => {
+  const pkg = join(cwd, "package.json");
+  const data = await fs.readFile(pkg, "utf-8");
+  const { name, version } = JSON.parse(data);
+  return { name, version };
 };
 
 const isPublished = async (name: string, version: string) => {
@@ -27,6 +32,7 @@ const isPublished = async (name: string, version: string) => {
 };
 
 export const npm: Adapter = {
-  getVersion,
+  isProject,
+  getProject,
   isPublished,
 };

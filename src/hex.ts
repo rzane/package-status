@@ -1,12 +1,26 @@
 import exec from "execa";
+import { join } from "path";
 import { Adapter } from "./types";
-import { isFound } from "./utils";
+import { isFound, exists } from "./utils";
 
-const getVersion = async (cwd: string) => {
-  const args = ["run", "-e", "IO.puts(Mix.Project.config()[:version])"];
+const getProperty = async (cwd: string, key: string) => {
+  const args = ["run", "-e", `IO.puts(Mix.Project.config()[:${key}])`];
   const { stdout } = await exec("mix", args, { cwd });
-  const [version] = stdout.trim().split("\n").slice(-1);
-  return version;
+  const [value] = stdout.trim().split("\n").slice(-1);
+  return value;
+};
+
+const isProject = (cwd: string) => {
+  return exists(join(cwd, "mix.exs"));
+};
+
+const getProject = async (cwd: string) => {
+  const [name, version] = await Promise.all([
+    getProperty(cwd, "app"),
+    getProperty(cwd, "version"),
+  ]);
+
+  return { name, version };
 };
 
 const isPublished = (name: string, version: string) => {
@@ -14,6 +28,7 @@ const isPublished = (name: string, version: string) => {
 };
 
 export const hex: Adapter = {
-  getVersion,
+  isProject,
+  getProject,
   isPublished,
 };

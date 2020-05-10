@@ -1,4 +1,10 @@
+export interface Project {
+  name: string;
+  version: string;
+}
+
 export interface Adapter {
-  getVersion(cwd: string, name: string): Promise<string>;
+  isProject(cwd: string): Promise<boolean>;
+  getProject(cwd: string): Promise<Project>;
   isPublished(name: string, version: string): Promise<boolean>;
 }
