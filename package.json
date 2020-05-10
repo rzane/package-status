@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
-    "is-unpublished": "ts-node src/index.ts",
     "test": "jest",
+    "start": "ts-node src/index.ts",
     "build": "ncc build -t src/index.ts -o action"
   },
   "bin": {
