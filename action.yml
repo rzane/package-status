@@ -1,4 +1,4 @@
-name: "Unpublished"
+name: is-unpublished
 description: "Does your package need to be published?"
 inputs:
   cwd:
