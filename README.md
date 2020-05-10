@@ -45,7 +45,7 @@ Indicates that your package hasn't been published yet.
 ```yaml
 - name: Check
   id: check
-  uses: rzane/is-unpublished@v2
+  uses: rzane/is-unpublished@v1
 
 - name: Publish
   run: yarn publish

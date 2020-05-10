@@ -5,6 +5,8 @@ import { gem } from "./gem";
 import { hex } from "./hex";
 import { npm } from "./npm";
 
+const validKeys = ["_", "h", "help", "v", "version", "print-version"];
+
 const help = `Usage: is-unpublished [cwd] [options]
 
 Has the current version of this package been published?
@@ -36,6 +38,22 @@ export const run = async (argv: string[]) => {
   const cwd = opts._[0] || ".";
 
   /**
+   * Validate arguments
+   */
+  if (opts._.length > 1) {
+    return { status: 1, stderr: "ERROR: Too many arguments\n" };
+  }
+
+  /**
+   * Validate options
+   */
+  for (const key of Object.keys(opts)) {
+    if (!validKeys.includes(key)) {
+      return { status: 1, stderr: `ERROR: Invalid option: ${key}\n` };
+    }
+  }
+
+  /**
    * Show the help message.
    */
   if (opts.h || opts.help) {
@@ -55,7 +73,7 @@ export const run = async (argv: string[]) => {
    */
   const adapter = await detectAdapter(cwd);
   if (!adapter) {
-    return { status: 1, stdout: "Failed to determine package type.\n" };
+    return { status: 1, stderr: "ERROR: Failed to determine package type\n" };
   }
 
   /**
@@ -84,8 +102,9 @@ export const run = async (argv: string[]) => {
 
 if (require.main === module) {
   run(process.argv.slice(2))
-    .then(({ stdout, status }) => {
-      process.stdout.write(stdout);
+    .then(({ stdout, stderr, status }) => {
+      if (stderr) process.stderr.write(stderr);
+      if (stdout) process.stdout.write(stdout);
       process.exit(status);
     })
     .catch((error) => {
