@@ -2,6 +2,8 @@
   "name": "is-unpublished",
   "version": "0.1.0",
   "license": "MIT",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "test": "jest",
     "start": "ts-node src/index.ts",
@@ -9,6 +11,18 @@
   },
   "bin": {
     "is-unpublished": "lib/index.js"
+  },
+  "files": [
+    "lib/**/*"
+  ],
+  "description": "Determine if the current version of a package is unpublished",
+  "homepage": "https://github.com/rzane/is-unpublished#readme",
+  "bugs": {
+    "url": "https://github.com/rzane/is-unpublished/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rzane/is-unpublished.git"
   },
   "jest": {
     "preset": "ts-jest",
