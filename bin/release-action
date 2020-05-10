@@ -8,8 +8,11 @@ if [ "$#" -lt 1 ]; then
 fi
 
 yarn ncc build src/runners/action.ts -t -o .github/dist
+
 git add .github/dist
-git commit -m "Release action $1"
+if git commit -m "Release action $1"; then
+  git push origin master
+fi
+
 git tag "$@"
-git push origin master "${@:2}"
 git push origin "$@"
