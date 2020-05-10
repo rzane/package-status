@@ -1,7 +1,7 @@
 import got from "got";
 import { promises as fs } from "fs";
 import { join } from "path";
-import { Adapter } from "./types";
+import { Adapter } from "../types";
 import { is404, exists } from "./utils";
 
 const isProject = async (cwd: string) => {

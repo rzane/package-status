@@ -36,6 +36,14 @@ The directory your package lives in.
 
 ## Outputs
 
+### `name`
+
+The name of your package.
+
+### `version`
+
+The current version of your package.
+
 ### `is-unpublished`
 
 Indicates that your package hasn't been published yet.

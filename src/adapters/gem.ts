@@ -1,6 +1,6 @@
 import exec from "execa";
 import { promises as fs } from "fs";
-import { Adapter } from "./types";
+import { Adapter } from "../types";
 import { isFound } from "./utils";
 
 const findGemspec = async (cwd: string) => {

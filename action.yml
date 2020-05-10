@@ -6,12 +6,12 @@ inputs:
     required: false
     default: "."
 outputs:
+  name:
+    description: "Your package name"
   version:
-    description: "Your current package version"
+    description: "Your package version"
   is-unpublished:
     description: "Is your package unpublished?"
 runs:
-  using: "docker"
-  image: "Dockerfile"
-  args:
-    - ${{ inputs.cwd }}
+  using: "node12"
+  main: ".github/dist/index.js"

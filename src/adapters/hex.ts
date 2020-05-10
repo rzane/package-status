@@ -1,6 +1,6 @@
 import exec from "execa";
 import { join } from "path";
-import { Adapter } from "./types";
+import { Adapter } from "../types";
 import { isFound, exists } from "./utils";
 
 const getProperty = async (cwd: string, key: string) => {

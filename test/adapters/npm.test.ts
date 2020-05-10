@@ -1,7 +1,6 @@
 import nock from "nock";
-import { join } from "path";
 import { RequestError } from "got";
-import { npm } from "../src/npm";
+import { npm } from "../../src";
 
 const host = "https://registry.npmjs.org";
 const path = "/example";
@@ -14,8 +13,7 @@ describe("npm", () => {
   });
 
   test("getProject", async () => {
-    const cwd = join(__dirname, "fixtures", "npm");
-    const { name, version } = await npm.getProject(cwd);
+    const { name, version } = await npm.getProject("test/fixtures/npm");
     expect(name).toEqual("example");
     expect(version).toEqual("1.2.3");
   });
